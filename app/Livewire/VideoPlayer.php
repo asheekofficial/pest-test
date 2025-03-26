@@ -15,7 +15,13 @@ class VideoPlayer extends Component
     {
         $courseVideos = $this->course->videos ;
 
-        return view('livewire.video-player', compact('courseVideos'));
+        $videoAlreadyWatched = Auth::user()->videos()
+        ->where('video_id', $this->video->id)
+        ->exists();
+
+        // dd($videoAlreadyWatched) ;
+
+        return view('livewire.video-player', compact('courseVideos', 'videoAlreadyWatched'));
     }
 
     public function markVideoAsWatched() :void

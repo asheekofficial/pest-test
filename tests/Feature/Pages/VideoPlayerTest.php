@@ -12,6 +12,8 @@ it('shows details for given video',function(){
 
     $video = $course->videos->first();
 
+    loginAsUser();
+
     $this->assertEquals($video->duration, 10) ;
 
     Livewire::test('video-player', ['video' => $video, 'course' => $course])
@@ -28,6 +30,8 @@ it('shows video player',function(){
     ->state(['vimeo_video_id' => 1]))
     ->create();
 
+    loginAsUser();
+
     $video = $course->videos->first();
 
     Livewire::test('video-player', ['video' => $video, 'course' => $course])
@@ -42,6 +46,7 @@ it('shows list of all videos',function(){
     ->create();
 
     $videos = $course->videos;
+    loginAsUser();
 
     $response = Livewire::test('video-player', ['video' => $videos->first(), 'course' => $course])
     ->assertOk()
@@ -74,6 +79,7 @@ it('can mark video as watched',function(){
     expect($user->videos)->toHaveCount(0);
 
     Livewire::test('video-player', ['video' => $video, 'course' => $course])
+    ->assertSeeText('Mark as completed')
     ->call('markVideoAsWatched');
 
     $user->refresh() ;
@@ -96,6 +102,7 @@ it('can mark video as not completed',function(){
     expect($user->videos)->toHaveCount(1);
 
     Livewire::test('video-player', ['video' => $video, 'course' => $course])
+    ->assertSeeText('Mark as not completed')
     ->call('markVideoAsNotWatched');
 
     $user->refresh() ;
