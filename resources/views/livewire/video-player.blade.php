@@ -7,6 +7,12 @@
 
     <iframe src="https://player.vimeo.com/video/{{$video->vimeo_video_id}}" allowfullscreen></iframe>
 
+    @if($videoAlreadyWatched)
+        <button wire:click='markVideoAsNotWatched'>Mark as not completed</button>
+    @else
+        <button wire:click='markVideoAsWatched'>Mark as completed</button>
+    @endif
+
     <div>
         <h5>All Videos</h5>
 
